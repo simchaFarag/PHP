@@ -1,0 +1,30 @@
+-- שליפת משתמשים ופוסטים פעילים 
+SELECT Users.id, Users.name, Users.email, Users.active, Posts.title, Posts.creation_date
+FROM Users
+JOIN Posts ON Users.id = Posts.user_id
+WHERE Users.active = 1 AND Posts.active = 1;
+
+
+-- מציאת הפוסט האחרון ליוזר עם יומולת בחודש הנוכחי 
+
+
+SELECT Users.name, MAX(Posts.creation_date) AS last_post_date
+FROM Users
+JOIN Posts ON Users.id = Posts.user_id
+WHERE Users.birthdate IS NOT NULL
+AND MONTH(Users.birthdate) = MONTH(NOW())
+GROUP BY Users.name; 
+
+
+CREATE DATABASE IF NOT EXISTS INMANGE;
+
+
+
+-- יצירת טבלה עביר כמה פוסטים לכל שעה
+CREATE TABLE PostsPerHour (
+    post_hour DATETIME,
+    post_count INT 
+); 
+
+
+
